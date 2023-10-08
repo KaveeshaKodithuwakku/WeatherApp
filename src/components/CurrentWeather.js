@@ -11,7 +11,6 @@ export default function CurrentWeather(props) {
 
     const { main, wind } = props;
 
-
     return (
 
         <>
@@ -19,27 +18,22 @@ export default function CurrentWeather(props) {
 
                 <View style={{ flexDirection: 'column' }}>
                     <View style={{ flexDirection: 'row', margin: 20, marginLeft: 40, justifyContent: 'center' }}>
-                        <Card.Content style={{ flex: 1 }}>
+                        <Card.Content>
 
                             <ImageBackground source={maxTempIc} resizeMode="cover" style={styles.maxTmpIcon}>
                             </ImageBackground>
 
                             <Text variant="bodyMedium" style={styles.maxTempText}>Max Temp</Text>
-                            <Text variant="bodyMedium" style={styles.maxTempTextValue}>
-                                {
-                                    roundTemp != 0 ? roundTemp + " °C" : "0 °C"
-                                }
-
-                            </Text>
+                            <Text variant="bodyMedium" style={styles.maxTempTextValue}>{main.temp_max} °C </Text>
                         </Card.Content>
-                        <Card.Content style={{ flex: 1 }}>
+                        <Card.Content >
                             <ImageBackground source={humidityIc} resizeMode="cover" style={styles.humidityIcon}>
                             </ImageBackground>
                             <Text variant="bodyMedium" style={styles.humidityText}>Humidity</Text>
                             <Text variant="bodyMedium" style={styles.humidityTextValue}>{main.humidity} %</Text>
                         </Card.Content>
 
-                        <Card.Content style={{ flex: 1 }}>
+                        <Card.Content>
                             <ImageBackground source={windIc} resizeMode="cover" style={styles.windIcon}>
                             </ImageBackground>
                             <Text variant="bodyMedium" style={styles.windText}>Wind</Text>
@@ -68,6 +62,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: 'bold',
         marginLeft: 5,
+
     },
     windIcon: {
         width: 30,
@@ -100,7 +95,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     cardContainer: {
-        margin: 10,
+        margin: 30,
+        marginLeft:50,
+        marginRight:50,
         borderRadius: 20,
         justifyContent: 'center',
         alignContent: 'space-between',

@@ -7,6 +7,8 @@ import Geolocation from '@react-native-community/geolocation';
 import axios from "axios";
 import Icon from 'react-native-vector-icons/Entypo';
 import dateFormat, { masks } from "dateformat";
+import CurrentWeather from '../components/CurrentWeather';
+import HourlyWeather from '../components/HourlyWeather';
 
 export default function Home() {
 
@@ -149,8 +151,12 @@ export default function Home() {
           }
         </View>
    {/* <Text style={styles.descText} variant="displayMedium">{weather[0].description}</Text>  */}
+  
+   <CurrentWeather main={main} wind={wind} />
 
+<HourlyWeather />
  
+
 </View>
 </SafeAreaView>
         </ImageBackground>

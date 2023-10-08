@@ -2,7 +2,7 @@ import { StyleSheet, View, FlatList, SafeAreaView, ImageBackground, Alert } from
 import React, { useEffect, useState } from 'react'
 import {  Card, Text } from 'react-native-paper';
 import { PermissionsAndroid } from 'react-native';
-import sunDownIc from "../../assets/images/sunDown.png"
+import sunDownIc from "../../assets/images/sunDownIc.png"
 import Geolocation from '@react-native-community/geolocation'
 import axios from "axios";
 import dateFormat, { masks } from "dateformat";
@@ -64,7 +64,7 @@ export default function HourlyWeather() {
   const getAllData = async (lati, longi) => {
 
     try {
-      await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lati}&lon=${longi}&appid=${ApiKey}`)
+      await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lati}&lon=${longi}&units=metric&appid=${ApiKey}`)
         .then((response) => {
           setHourlyData(response.data);
           setList(response.data.list);
@@ -87,7 +87,7 @@ export default function HourlyWeather() {
   )
 
   return (
-    <SafeAreaView style={styles.container}>
+<>
       <FlatList
         data={hourlyData.list}
         horizontal={true}
@@ -100,11 +100,11 @@ export default function HourlyWeather() {
             <View style={{ flexDirection: 'column' }}>
               <View style={{ flexDirection: 'row', margin: 20, marginLeft: 40, justifyContent: 'center' }}>
 
-                <Card.Content style={{ flex: 1 }}>
+                <Card.Content>
 
-                  <Text variant="bodyMedium" style={styles.tempText}>{Math.round((item.main.temp - 32) * 5 / 9)} °C</Text>
+                  <Text variant="bodyMedium" style={styles.tempText}>{item.main.temp - 32} °C</Text>
                   <Text style={{ color: 'lightgray', textTransform: 'uppercase', fontSize: 10, marginLeft: 10 }}>Scattered  Clouds</Text>
-                  {listItems}
+                  {/* {list.weather[0].description} */}
                   <ImageBackground source={sunDownIc} resizeMode="cover" style={styles.windIcon}>
                   </ImageBackground>
                   <Text variant="bodyMedium" style={styles.windText}>{dateFormat(item.dt_txt)}</Text>
@@ -115,7 +115,7 @@ export default function HourlyWeather() {
           </Card>
         }
       />
-    </SafeAreaView>
+</>
   )
 }
 
@@ -138,9 +138,7 @@ const styles = StyleSheet.create({
     marginLeft: '35%',
   },
   cardContainer: {
-    margin: 10,
     borderRadius: 20,
-    justifyContent: 'center',
-    alignContent: 'space-between',
+    width:100,
   }
 })
