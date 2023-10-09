@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, SafeAreaView, ImageBackground, Alert } from 'react-native'
+import { StyleSheet, View, FlatList, SafeAreaView, ImageBackground, Alert,Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {  Card, Text } from 'react-native-paper';
 import { PermissionsAndroid } from 'react-native';
@@ -95,18 +95,30 @@ export default function HourlyWeather() {
         renderItem={({ item }) =>
 
 
-          <Card style={styles.cardContainer} >
+          <Card style={styles.cardContainer} key={item.id}>
 
             <View style={{ flexDirection: 'column' }}>
               <View style={{ flexDirection: 'row', margin: 20, marginLeft: 40, justifyContent: 'center' }}>
 
                 <Card.Content>
 
-                  <Text variant="bodyMedium" style={styles.tempText}>{item.main.temp - 32} °C</Text>
-                  <Text style={{ color: 'lightgray', textTransform: 'uppercase', fontSize: 10, marginLeft: 10 }}>Scattered  Clouds</Text>
-                  {/* {list.weather[0].description} */}
-                  <ImageBackground source={sunDownIc} resizeMode="cover" style={styles.windIcon}>
-                  </ImageBackground>
+                  <Text variant="bodyMedium" style={styles.tempText}>{item.main.temp} °C</Text>
+                  <Text style={{ color: 'lightgray', textTransform: 'uppercase',fontWeight:'bold',marginTop: 5, fontSize: 10, marginLeft: 10 }}>{item.weather[0].description}</Text>
+                  {/* <ImageBackground source={sunDownIc} resizeMode="cover" style={styles.windIcon}>
+                  </ImageBackground> */}
+                  
+                  <View>
+          {
+            item.weather.length === 0 ? <Image
+            source={{ uri: `https://openweathermap.org/img/wn/01d@2x.png` }}
+            style={styles.weatherIcon}
+          /> 
+            :  <Image
+            source={{ uri: `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png` }}
+            style={styles.weatherIcon}
+          />
+          }
+        </View>
                   <Text variant="bodyMedium" style={styles.windText}>{dateFormat(item.dt_txt)}</Text>
 
                 </Card.Content>
@@ -135,10 +147,22 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "black",
     fontWeight: 'bold',
-    marginLeft: '35%',
+    marginLeft:30,
+    justifyContent:'center',
+    alignItems:'center'
   },
   cardContainer: {
     borderRadius: 20,
-    width:100,
-  }
+    width:250,
+    height:200,
+    display: 'flex',
+    justifyContent:'center',
+    margin: 10,
+  },
+  weatherIcon: {
+    width: 100,
+    height: 70,
+    justifyContent:'center',
+    alignItems:'center'
+  },
 })

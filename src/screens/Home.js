@@ -18,10 +18,14 @@ export default function Home() {
   const [weather, setWeather] = useState([]);
   const [main, setMain] = useState({});
   const [wind, setWind] = useState({});
+   const [lati, setLati] = useState('');
+   const [longi, setLongi] = useState('');
   const currTime = new Date().toLocaleTimeString();
   const now = new Date();
   const today = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
   const ApiKey = "5a3742458d715f5f626ce21f41be4317";
+
+  let x =1;
 
   useEffect(() => {
     findTime();
@@ -69,25 +73,27 @@ export default function Home() {
   const getLocation = async () => {
 
     console.log("2222")
-    getWeatherData(0, 0);
-    // await Geolocation.getCurrentPosition(
-    //   position => {
-    //     var { latitude, longitude } = position.coords;
+    // getWeatherData(0, 0);
+    await Geolocation.getCurrentPosition(
+      position => {
+        var { latitude, longitude } = position.coords;
 
-    //     console.log("coordinates" + latitude + "-" + longitude);
-    //     getWeatherData(latitude, longitude);
+        console.log("coordinates" + latitude + "-" + longitude);
+        getWeatherData(latitude, longitude);
+        setLati(latitude);
+        setLongi(longitude);
 
-    //   },
-    //   error => Alert.alert(error.message),
-    //   { enableHighAccuracy: true, timeout:20000, maximumAge: 2000 }
-    // );
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout:20000, maximumAge: 2000 }
+    );
 
   };
 
   const getWeatherData = async (lati, longi) => {
    
-    await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=5.93422059&lon=80.60411634&units=metric&appid=5a3742458d715f5f626ce21f41be4317`)
-      //await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lati}&lon=${longi}&appid=${ApiKey}`)
+   // await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=5.93422059&lon=80.60411634&units=metric&appid=5a3742458d715f5f626ce21f41be4317`)
+      await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lati}&lon=${longi}&units=metric&appid=${ApiKey}`)
       .then((response) => {
         console.log(response.data);
         setWeatherData(response.data);
